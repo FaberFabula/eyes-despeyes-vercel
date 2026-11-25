@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101015">
+  <title>Eyes Despeyes</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./play.js"></script>
+</head>
+<body>
+  <main class="stage">
+    <canvas id="canvas" width="828" height="700" tabindex="0" aria-label="Eyes Despeyes game"></canvas>
+    <div id="launcher" class="launcher">
+      <div class="launcher-inner launcher-content">
+        <div class="launcher-actions">
+          <button data-mode="maze" type="button">Start Run</button>
+          <button data-mode="sandbox" class="sandbox-button" type="button">Sandbox</button>
+        </div>
+        <div class="hard-mode-action">
+          <button data-mode="hard" class="hard-mode-button" type="button" aria-describedby="hard-mode-note">Hard Mode</button>
+          <p id="hard-mode-note" class="hard-mode-note">Are you better than everyone the Eye has ever seen?</p>
+        </div>
+        <p id="status" role="status" hidden></p>
+        <details class="checklist" id="draft-error" hidden>
+          <summary>Error details</summary>
+          <pre id="draft-traceback"></pre>
+        </details>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
