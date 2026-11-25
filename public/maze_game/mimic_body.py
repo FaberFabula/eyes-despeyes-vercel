@@ -9,6 +9,7 @@ from .effects import WeaponFlash
 from .item import DEBUG_TOOL, GATE_KEY, MIRROR, AttackProfile, Gear
 from .layout import TILE, Cell, center, find_path, tile_at
 from .physics import ACTOR, ShapeFilter, Vec2d
+from .player import PLAYER_SPEED
 from .progression import MimicAppearance
 
 if TYPE_CHECKING:
@@ -69,13 +70,15 @@ def set_mimic_size(enemy: "Enemy", maze: "Maze", radius: float, *, refill: bool 
     stamina = enemy.stamina
     enemy.mimic_memory.radius = enemy.full_radius = radius
     size = radius / MIMIC_BASE_RADIUS
-    enemy.speed = 175 + 24 * max(0, 1 - size)
     enemy.max_hp = round(40 * size ** 1.35)
     enemy.max_stamina = 100.0
     enemy.grip_multiplier = 0.75 + 0.55 * size
     enemy.strength_multiplier = 0.64 + 0.51 * size
     enemy.dexterity_multiplier = enemy.intelligence_multiplier = 1.0
     maze.scale_mob(enemy)
+    # Keep chase speed independent of the floor-one readiness penalty.
+    speed_upgrade = 1 + maze.progress.enemy_bonus("Speed")
+    enemy.speed = 0.9 * PLAYER_SPEED * speed_upgrade / max(0.7, size) ** 0.25
     if not refill:
         enemy.hp = max(1, enemy.max_hp - missing_hp)
         enemy.stamina = min(stamina, enemy.max_stamina)
